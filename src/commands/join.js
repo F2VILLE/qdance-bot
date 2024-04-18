@@ -2,8 +2,8 @@ const { SlashCommandBuilder, CommandInteraction, ChannelType } = require("discor
 const ExtendedClient = require("../class/ExtendedClient");
 const { joinVoiceChannel, getVoiceConnection, createAudioPlayer, createAudioResource, StreamType } = require("@discordjs/voice");
 const { get } = require("https");
-const { createWriteStream } = require("fs");
-const Readable = require("stream").Readable
+const ffmpeg = require('fluent-ffmpeg');
+
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("join")
@@ -41,8 +41,8 @@ module.exports = {
             const player = createAudioPlayer()
 
             get("https://22593.live.streamtheworld.com/Q_DANCE.mp3", (res) => {
-
-                const resource = createAudioResource(res)
+                const s = ffmpeg().input(res).format('mp3').outputOptions("-af bass=g=4").audioBitrate(128).pipe()
+                const resource = createAudioResource(s)
                 player.play(resource)
                 connection.subscribe(player)
             })
