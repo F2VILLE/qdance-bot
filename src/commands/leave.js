@@ -11,7 +11,8 @@ module.exports = {
      * @param {ExtendedClient} client 
      * @param {CommandInteraction} interaction 
      */
-    execute(client, interaction) {
+    async execute(client, interaction) {
+        await interaction.deferReply()
         if (!interaction.member.voice) return interaction.reply({ content: "You must be in a voice channel to use this command", ephemeral: true });
         getVoiceConnection(interaction.guild.id)?.destroy();
         interaction.reply({ content: "I'm leaving your voice channel", ephemeral: true });
