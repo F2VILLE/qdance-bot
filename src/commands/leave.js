@@ -13,8 +13,8 @@ module.exports = {
      */
     async execute(client, interaction) {
         await interaction.deferReply()
-        if (!interaction.member.voice) return interaction.reply({ content: "You must be in a voice channel to use this command", ephemeral: true });
+        if (!interaction.member.voice) return interaction.editReply({ content: "You must be in a voice channel to use this command", ephemeral: true });
         getVoiceConnection(interaction.guild.id)?.destroy();
-        interaction.reply({ content: "I'm leaving your voice channel", ephemeral: true });
+        interaction.editReply({ content: "I'm leaving your voice channel", ephemeral: true });
     }
 }
